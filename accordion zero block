@@ -1,0 +1,46 @@
+// Создаем зеро блок, вставляем штмл код на 6 колонок
+<div class="accordion" ></div>
+// Создаем блок TX16N, устанавливаем ширину 6 колон, без отступов
+// Добавляем блок 123, со следующим кодом
+
+<script>
+$( document ).ready(function() {
+  //Прописываем ID наших блоков  
+      var ZeroID = "#rec343941012"; //Zero
+      var AccoRD = "#rec343941135"; // TX16N
+  //Добавляем класс к нашим картинкам      
+      $('[href="#mainpic"]').addClass('mainpic');
+  //Переносим аккордеон в ZeroBlock      
+      $(AccoRD).appendTo('.accordion');
+      var ZeroBack = ""+ZeroID+" .t396__artboard , "+ZeroID+" .t396__carrier ,  "+ZeroID+" .t396__filter";
+      var oldheight = $(AccoRD+" .t585__opened").siblings('.t585__content').height();
+  //При загрузке
+    if($(AccoRD+" .t585__header").hasClass('t585__opened')){
+        cohnheight = $(AccoRD+" .t585__opened").siblings('.t585__content').height();
+        setTimeout(function(){$(ZeroBack).animate({height:'+='+cohnheight},300);
+        $(".mainpic").parent(".tn-elem").animate({top:'+='+cohnheight},300);
+         }, 3000);
+    };
+  //При раскрытии нужного аккордеона  - изменяем высоту ZeroBlock и положение картинок    
+     $( AccoRD+" .t585__header" ).click(function() { 
+          var thelem=this;
+        setTimeout(function(){cohnheight=0;movey=0;
+        $(AccoRD+" .t585__opened").siblings('.t585__content').each(function( index ) {
+            cohnheight = cohnheight + $(this).height();
+        });
+        if(cohnheight>oldheight){ movey = cohnheight - oldheight;
+        $(ZeroBack).animate({height:'+='+movey},300);
+         $(".mainpic").parent(".tn-elem").animate({top:'+='+movey},300);
+            }else{ movey = oldheight - cohnheight;
+            $(ZeroBack).animate({height:'-='+movey},300); 
+             $(".mainpic").parent(".tn-elem").animate({top:'-='+movey},300);
+            };oldheight = cohnheight;
+          }, 400);     
+      });
+ $( window ).resize(function() {
+    $(AccoRD+' .t585__header').removeClass('t585__opened');oldheight=0;cohnheight=0;
+    $(AccoRD+' .t585__content').hide();$(ZeroBack).css('height','');
+});
+});
+</script>
+
